@@ -16,14 +16,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 
-const MessageCircle_NUMBER = "593000000000"; // <--- Reemplaza por tu número real (ej: 593987654321)
+const MessageCircle_NUMBER = "593983502892"; // <--- Reemplaza por tu número real (ej: 593987654321)
 const COMPANY_ADDRESS = "Quito, Ecuador"; // <--- Reemplaza por tu dirección
-const COMPANY_EMAIL = "contacto@recical.ec"; // <--- Reemplaza por tu correo
-const COMPANY_PHONE = "+593 2 000 0000"; // <--- Reemplaza por tu teléfono
+const COMPANY_EMAIL = "vicvincal@hotmail.com"; // <--- Reemplaza por tu correo
+const COMPANY_PHONE = "+593983502892"; // <--- Reemplaza por tu teléfono
 const MAP_EMBED_SRC =
-  "https://www.openstreetmap.org/export/embed.html?bbox=-78.6%2C-0.3%2C-78.3%2C-0.0&layer=mapnik&marker=-0.1807%2C-78.4678"; // Quito (cámbialo por el embed de tu dirección)
-
-export default function ReciCalLanding() {
+  "https://www.google.com/maps?q=-0.1178293,-78.4731237&z=20&output=embed";
+const MAP_EMBED_SRC2 =
+  "https://www.google.com/maps?q=-0.1018445,-78.4192381&z=19&output=embed"; // Google Maps - Quito
+const MAP_LOCATIONS = [
+  { title: "Av. Eloy Alfaro y De Las Higueras", src: MAP_EMBED_SRC, description: "Bodega principal Centro-Norte" },
+  { title: "Panamericana Norte y Lizardo Becerra", src: MAP_EMBED_SRC2, description: "Bodega secundaria Norte" },
+];
+export default function RecicleLanding() {
   const [form, setForm] = useState({ nombre: "", email: "", telefono: "", mensaje: "" });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
@@ -54,19 +59,19 @@ export default function ReciCalLanding() {
   };
 
   const MessageCircleHref = `https://wa.me/${MessageCircle_NUMBER}?text=${encodeURIComponent(
-    "Hola ReciCal, necesito información sobre sus servicios de reciclaje."
+    "Hola Recicle, necesito información sobre sus servicios de reciclaje."
   )}`;
 
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-800">
       {/* NAV */}
       <header className="sticky top-0 z-30 backdrop-blur bg-white/70 border-b">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center align center justify-between">
           <div className="flex items-center gap-2">
             <div className="h-9 w-9 rounded-2xl bg-emerald-600 grid place-items-center text-white">
               <Recycle className="h-5 w-5" />
             </div>
-            <span className="font-semibold text-xl">ReciCal</span>
+            <span className="font-semibold text-xl">Recicle</span>
           </div>
           
 <nav className="hidden md:flex gap-6 text-sm">
@@ -75,11 +80,6 @@ export default function ReciCalLanding() {
   <a href="#contacto" className="hover:text-emerald-700">Contacto</a>
 </nav>
 
-          <a href={MessageCircleHref} target="_blank" rel="noreferrer">
-            <Button className="bg-emerald-600 hover:bg-emerald-700">
-              <MessageCircle className="h-4 w-4 mr-2" /> MessageCircle
-            </Button>
-          </a>
         </div>
       </header>
 
@@ -92,7 +92,7 @@ export default function ReciCalLanding() {
               Reciclaje inteligente para un <span className="text-emerald-700">futuro circular</span>
             </h1>
             <p className="mt-4 text-neutral-600 text-lg">
-              En <strong>ReciCal</strong> transformamos residuos en oportunidades. Recolección, clasificación y
+              En <strong>Recicle</strong> transformamos residuos en oportunidades. Recolección, clasificación y
               valorización para empresas que buscan sostenibilidad real.
             </p>
             <div className="mt-6 flex gap-3">
@@ -190,7 +190,7 @@ export default function ReciCalLanding() {
                   {errors.email && <p className="text-red-600 text-xs mt-1">{errors.email}</p>}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium">Teléfono (opcional)</label>
+                  <label className="block text-sm font-medium">Teléfono</label>
                   <input
                     className={`mt-1 w-full rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-600 ${errors.telefono ? "border-red-400" : "border-neutral-300"}`}
                     placeholder="+593 9 9999 9999"
@@ -226,18 +226,26 @@ export default function ReciCalLanding() {
             </div>
           </div>
 
-          <Card className="rounded-2xl overflow-hidden border-neutral-200">
-            <CardContent className="p-0">
-              <div className="aspect-video w-full">
-                <iframe
-                  title="Ubicación ReciCal"
-                  src={MAP_EMBED_SRC}
-                  className="w-full h-full border-0"
-                  loading="lazy"
-                />
-              </div>
-            </CardContent>
-          </Card>
+          <div className="grid gap-6">
+            {MAP_LOCATIONS.map((map) => (
+              <Card key={map.title} className="rounded-2xl overflow-hidden border-neutral-200">
+                <div className="px-4 py-3 border-b border-neutral-200 bg-neutral-50">
+                  <div className="text-sm font-semibold text-neutral-900">{map.title}</div>
+                  <div className="text-xs text-neutral-500 mt-1">{map.description}</div>
+                </div>
+                <CardContent className="p-0">
+                  <div className="aspect-video w-full">
+                    <iframe
+                      title={map.title}
+                      src={map.src}
+                      className="w-full h-full border-0"
+                      loading="lazy"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -250,7 +258,7 @@ export default function ReciCalLanding() {
           </div>
           <div className="flex md:justify-end gap-3">
             <a href={MessageCircleHref} target="_blank" rel="noreferrer">
-              <Button className="bg-white text-emerald-700 hover:bg-emerald-100"><MessageCircle className="h-4 w-4 mr-2" /> Escribir por MessageCircle</Button>
+              <Button className="bg-white text-emerald-700 hover:bg-emerald-100"><MessageCircle className="h-4 w-4 mr-2" /> Escribir por Whatsapp</Button>
             </a>
             <a href="#contacto"><Button variant="secondary" className="bg-emerald-600 hover:bg-emerald-800 text-white border-0">Solicitar info</Button></a>
           </div>
@@ -265,7 +273,7 @@ export default function ReciCalLanding() {
               <div className="h-8 w-8 rounded-xl bg-emerald-600 grid place-items-center text-white">
                 <Recycle className="h-4 w-4" />
               </div>
-              <span className="font-semibold">ReciCal</span>
+              <span className="font-semibold">Recicle</span>
             </div>
             <p className="text-sm mt-3 text-neutral-400">Reciclaje corporativo con trazabilidad y reportes para una economía circular real.</p>
           </div>
@@ -288,7 +296,7 @@ export default function ReciCalLanding() {
         </div>
         <div className="border-t border-neutral-800">
           <div className="max-w-6xl mx-auto px-4 py-4 text-xs text-neutral-500 flex items-center justify-between">
-            <span>© 2026 ReciCal. Todos los derechos reservados.</span>
+            <span>© 2026 Recicle. Todos los derechos reservados.</span>
             <a className="hover:text-neutral-300" href="#">Política de privacidad</a>
           </div>
         </div>
