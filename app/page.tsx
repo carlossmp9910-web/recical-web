@@ -46,17 +46,30 @@ export default function RecicleLanding() {
 
   const handleChange = (k: string, v: string) => setForm(prev => ({ ...prev, [k]: v }));
 
-  const handleSubmit = async (ev: React.FormEvent) => {
-    ev.preventDefault();
-    if (!validate()) return;
-    setSending(true);
-    // 🔁 Simulación de envío. Sustituye por tu llamado a API / Formspree / Power Automate.
-    await new Promise(res => setTimeout(res, 1200));
-    setSending(false);
-    setSent(true);
-    setForm({ nombre: "", email: "", telefono: "", mensaje: "" });
-    setTimeout(() => setSent(false), 4000);
-  };
+const handleSubmit = (ev: React.FormEvent) => {
+  ev.preventDefault();
+  if (!validate()) return;
+
+  const text = `
+Hola Recicle, quiero información:
+
+Nombre/Empresa: ${form.nombre}
+Correo: ${form.email}
+Teléfono: ${form.telefono}
+
+Mensaje:
+${form.mensaje}
+  `.trim();
+
+  const url = `https://wa.me/${MessageCircle_NUMBER}?text=${encodeURIComponent(text)}`;
+
+  window.open(url, "_blank");
+
+  setSent(true);
+  setForm({ nombre: "", email: "", telefono: "", mensaje: "" });
+  setTimeout(() => setSent(false), 4000);
+};
+``
 
   const MessageCircleHref = `https://wa.me/${MessageCircle_NUMBER}?text=${encodeURIComponent(
     "Hola Recicle, necesito información sobre sus servicios de reciclaje."
